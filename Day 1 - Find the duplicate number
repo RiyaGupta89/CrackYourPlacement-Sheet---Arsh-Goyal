@@ -1,0 +1,18 @@
+class Solution {
+    public int findDuplicate(int[] nums) {
+        HashMap<Integer,Integer> memo = new HashMap<>();
+        int ans=-1;
+        for(int i=0;i<nums.length;i++){
+            memo.put(nums[i],memo.getOrDefault(nums[i],0)+1);
+        }
+        
+        for(Map.Entry<Integer,Integer> e:memo.entrySet()){
+            if(e.getValue()>1){
+                ans = e.getKey();
+                return ans;
+            }
+        }
+        return ans;
+        
+    }
+}
