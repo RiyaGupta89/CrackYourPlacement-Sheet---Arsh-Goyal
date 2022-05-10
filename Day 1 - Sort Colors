@@ -1,0 +1,33 @@
+class Solution {
+    public void sortColors(int[] nums) {
+        int noOfOne = 0;
+        int noOfTwo = 0;
+        int noOfThree = 0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]==0){
+                noOfOne++;
+            } else if(nums[i]==1){
+                noOfTwo++;
+            } else {
+                noOfThree++;
+            }
+        }
+        int k=0;
+        while(noOfOne>0){
+            nums[k]=0;
+            noOfOne--;
+            k++;
+        }
+        while(noOfTwo>0){
+            nums[k]=1;
+            noOfTwo--;
+            k++;
+        }
+        while(noOfThree>0){
+            nums[k]=2;
+            noOfThree--;
+            k++;
+        }
+        
+    }
+}
