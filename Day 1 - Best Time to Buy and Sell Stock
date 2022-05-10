@@ -1,0 +1,33 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        return bestWays(0,1,1,prices,new HashMap<String,Integer>());
+    }
+    private int bestWays(int currentDay, int canBuy, int transCount, int[] prices, HashMap<String,Integer> memo){
+        if(currentDay>=prices.length){
+            return 0;
+        }
+        
+        if(transCount == 0){
+            return 0;
+        }
+        
+        String currentKey = currentDay+"_"+canBuy+"_"+transCount;
+        
+        if(memo.containsKey(currentKey)){
+            return memo.get(currentKey);
+        }
+        
+        if(canBuy==1){
+            int idle = bestWays(currentDay+1, canBuy, transCount, prices,memo);
+            int buy = -prices[currentDay]+bestWays(currentDay+1,0,transCount,prices,memo);
+            memo.put(currentKey,Math.max(idle,buy));
+            return Math.max(idle,buy);
+        } else {
+            int idle = bestWays(currentDay+1,canBuy,transCount,prices,memo);
+            int sell = prices[currentDay]+bestWays(currentDay+1,0,0,prices,memo);
+            memo.put(currentKey, Math.max(idle,sell));
+            return Math.max(idle,sell);
+        }
+        
+    }
+}
