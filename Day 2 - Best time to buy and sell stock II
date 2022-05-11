@@ -1,0 +1,29 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        return bestTime(0,1,prices,new HashMap<String, Integer>());
+    }
+    private int bestTime(int currentDay, int canBuy, int[] prices, HashMap<String, Integer> memo){
+        if(currentDay>=prices.length){
+            return 0;
+        }
+        
+        String currentKey = currentDay+"_"+canBuy;
+        
+        if(memo.containsKey(currentKey)){
+            return memo.get(currentKey);
+        }
+        
+        if(canBuy==1){
+            int idle = bestTime(currentDay+1, canBuy, prices, memo); 
+            int buy = -prices[currentDay]+bestTime(currentDay+1, 0, prices, memo);
+            memo.put(currentKey, Math.max(idle,buy));
+            return Math.max(idle,buy);
+        } else {
+            int idle = bestTime(currentDay+1, canBuy, prices, memo);
+            int sell = prices[currentDay]+bestTime(currentDay+1, 1, prices, memo);
+            memo.put(currentKey, Math.max(idle,sell));
+            return Math.max(idle,sell);
+        }
+        
+    }
+}
