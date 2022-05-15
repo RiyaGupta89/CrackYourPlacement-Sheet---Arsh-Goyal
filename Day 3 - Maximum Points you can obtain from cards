@@ -1,0 +1,28 @@
+class Solution {
+    public int maxScore(int[] cardPoints, int k) {
+        int c = cardPoints.length-k;
+        int ans = -9999;
+        int sumLeft=0;
+        int sumTotal = 0;
+        for(int i=0;i<c;i++){
+            sumLeft+=cardPoints[i];
+        }
+        for(int i=0;i<cardPoints.length;i++){
+            sumTotal+= cardPoints[i];
+        }
+        
+        for(int i=0;i+k<cardPoints.length;i++){
+            ans = Math.max(ans,(sumTotal - sumLeft));
+            
+            if(i+k+1<cardPoints.length){
+                sumLeft-=cardPoints[i];
+                sumLeft+=cardPoints[i+k+1];
+            }
+        }
+        if(ans==-9999){
+            return sumTotal;
+        }
+        return ans;
+        
+    }
+}
