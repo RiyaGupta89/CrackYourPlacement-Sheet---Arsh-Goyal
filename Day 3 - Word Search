@@ -1,0 +1,44 @@
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        int m = board.length;
+        int n = board[0].length;
+        Boolean ans = false;
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                if(board[i][j]!=word.charAt(0)){
+                    continue;
+                }
+                ans = ans||explore(i,j,m,n,word,board,0);
+            }
+        }
+        return ans;
+    }
+    private boolean explore(int cr,int cc, int m, int n, String word, char[][] board,int count){
+        if(count==word.length()){
+            return true;
+        }
+        if(cr<0||cr>=m||cc<0||cc>=n){
+            return false;
+        }
+        
+        if(word.charAt(count)!=board[cr][cc]){
+            return false;
+        }
+        
+        char myChar = board[cr][cc];
+        board[cr][cc]='@';
+        
+        Boolean res = false;
+        
+        res = res || explore(cr-1,cc,m,n,word,board,count+1);
+        res=res||explore(cr,cc+1,m,n,word,board,count+1);
+        res=res||explore(cr+1,cc,m,n,word,board,count+1);
+        res=res||explore(cr,cc-1,m,n,word,board,count+1);
+        board[cr][cc]=myChar;
+        if(res){
+            return true;
+        }
+    return false;
+    }
+    
+}
