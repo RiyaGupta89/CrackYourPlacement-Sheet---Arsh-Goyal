@@ -1,0 +1,16 @@
+class Solution {
+    public int majorityElement(int[] nums) {
+        HashMap<Integer,Integer> memo = new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            memo.put(nums[i],memo.getOrDefault(nums[i],0)+1);
+        }
+        int ans = -1;
+        for(Map.Entry<Integer,Integer> e:memo.entrySet()){
+            if(e.getValue()>nums.length/2){
+                ans = e.getKey();
+                return ans;
+            }
+        }
+        return ans;
+    }
+}
